@@ -1,4 +1,3 @@
-import numpy as np
 from board import Board
 from utils import log
 from agent import Agent
