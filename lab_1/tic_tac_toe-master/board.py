@@ -25,7 +25,7 @@ class Board(object):
             - A win is defined by any row, column or diagonal being filled with the same symbol, with the symbol as the winner.
         - If there is a winner, prints a message for the same.
     """
-    def __init__(self, n=3, player_sym='x'):
+    def __init__(self, n=3, player_sym='x') -> None:
         """
         Constructor of the Board class, creates board objects.
 
@@ -63,7 +63,7 @@ class Board(object):
         self.winner = None
         # Initialize the winner as None
 
-    def reset_board(self, n=3):
+    def reset_board(self, n=3) -> None:
         """
         params:
 
@@ -99,7 +99,7 @@ class Board(object):
             # Otherwise the cell must be empty, as only 1, 2 have 'O','X' mapped onto them.
             return self.sym_empty.get('mark')
 
-    def draw_board(self):
+    def draw_board(self) -> None:
         """
         Prints a human friendly representation of the tic-tac-toe board.
         """
@@ -124,7 +124,7 @@ class Board(object):
         # of the board
         print(board)
 
-    def have_same_val(self, axis, item, item_x, item_y):
+    def have_same_val(self, axis, item, item_x, item_y) -> bool:
         """
         Oh boy! without the documentation this would be just 12-14 lines of code.
 
@@ -191,7 +191,7 @@ class Board(object):
             main_idx += 1
         return result
 
-    def left_diagonal_has_same_values(self, item, item_x, item_y):
+    def left_diagonal_has_same_values(self, item, item_x, item_y) -> bool:
         """
         params
 
@@ -226,7 +226,7 @@ class Board(object):
             j += 1
         return result
 
-    def right_diagonal_has_same_values(self, item, item_x, item_y):
+    def right_diagonal_has_same_values(self, item, item_x, item_y) -> bool:
         """
         params
 
@@ -255,7 +255,7 @@ class Board(object):
             j -= 1
         return result
 
-    def cols_have_same_values(self, item, item_x, item_y):
+    def cols_have_same_values(self, item, item_x, item_y) -> bool:
         """
         Check if any of the columns have same values
 
@@ -268,7 +268,7 @@ class Board(object):
         axis = 1
         return self.have_same_val(axis, item, item_x, item_y)
 
-    def rows_have_same_values(self, item, item_x, item_y):
+    def rows_have_same_values(self, item, item_x, item_y) -> bool:
         """
         Check if any of the rows have same values
 
@@ -281,7 +281,7 @@ class Board(object):
         axis = 0
         return self.have_same_val(axis, item, item_x, item_y)
 
-    def element_diagonal_has_same_value(self, item, item_x, item_y):
+    def element_diagonal_has_same_value(self, item, item_x, item_y) -> bool:
         """
         Check if any of the diagonals have same values
 
@@ -306,7 +306,7 @@ class Board(object):
         # Else, it is not either of the diagonals
         return False
 
-    def is_game_over(self, player, item, item_x, item_y):
+    def is_game_over(self, player, item, item_x, item_y) -> bool:
         """
         Check if the game is over, which is defined by a row, column or diagonal having
         the same values as the latest inserted integer `item`.
@@ -321,7 +321,7 @@ class Board(object):
                     self.rows_have_same_values(item, item_x, item_y) or \
                     self.element_diagonal_has_same_value(item, item_x, item_y)
 
-    def is_winning_move(self, player, item, item_x, item_y):
+    def is_winning_move(self, player, item, item_x, item_y) -> bool:
         """
         Check if the last move was a winning move, which is defined by a row, column or diagonal having
         the same values as the latest inserted integer `item`.
@@ -337,7 +337,7 @@ class Board(object):
             return True
         return False
 
-    def is_stale(self):
+    def is_stale(self) -> bool:
         """
         Checks if there is no vacant space on the board.
         """
@@ -386,7 +386,7 @@ class Board(object):
                 print('Draw')
                 return 'draw'
 
-    def play(self, item_x, item_y):
+    def play(self, item_x, item_y) -> None:
         """
         The method exposed to a human user
         facilitates insertion of values into the board matrix.
@@ -404,7 +404,7 @@ class Board(object):
             return
         self.player_move(self.player_sym.get('mark'), item_x, item_y)
 
-    def bot_play(self, item_x, item_y):
+    def bot_play(self, item_x, item_y) -> None:
         """
         The method exposed to a bot
         facilitates insertion of values into the board matrix.

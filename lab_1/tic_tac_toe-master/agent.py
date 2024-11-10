@@ -6,7 +6,7 @@ from utils import log
 
 
 class Agent(object):
-    def __init__(self, sym, exploration_rate=0.90, decay=0.01, learning_rate=0.5, discount_factor=0.01):
+    def __init__(self, sym, exploration_rate=0.90, decay=0.01, learning_rate=0.5, discount_factor=0.01) -> None:
         """
         An agent is a problem solver.
         It should perform actions like:
@@ -35,7 +35,7 @@ class Agent(object):
         self.exploration_rate = exploration_rate
 
     @staticmethod
-    def serialize_board(board):
+    def serialize_board(board) -> str:
         """
         convert the matrix
 
@@ -50,7 +50,7 @@ class Agent(object):
         serialized_board = board.flatten()
         return ''.join([str(i) for i in serialized_board.flatten().tolist()])
 
-    def get_serious(self):
+    def get_serious(self) -> None:
         """
         Quit exploring states and start exploiting
         Use this if you want to play with the agent.
@@ -67,14 +67,14 @@ class Agent(object):
         self.exploration_rate = max(self.exploration_rate - self.decay, 0.3)
         return self.learning_rate * ((reward * self.states[new_state_key]) - old_state)
 
-    def set_state(self, old_board, action):
+    def set_state(self, old_board, action) -> None:
         """
         Store the action performed for a given state
         """
         state_key = Agent.serialize_board(old_board)
         self.state_order.append((state_key, action))
 
-    def on_reward(self, reward):
+    def on_reward(self, reward) -> None:
         """
         Assign rewards to actions performed on intermediate states.
         """
@@ -113,7 +113,7 @@ class Agent(object):
             new_state_key = state_key
             new_action = action
 
-    def select_move(self, board):
+    def select_move(self, board) -> tuple:
         """
         Choose from exploration and exploitation.
         Epsilon greedy implementation for policy.
@@ -143,7 +143,7 @@ class Agent(object):
         self.set_state(board, action)
         return action
 
-    def explore_board(self, board, depth=0):
+    def explore_board(self, board, depth=0) -> tuple:
         """
         Find an empty cell from the board
         """

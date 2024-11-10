@@ -3,7 +3,7 @@ from utils import log
 from agent import Agent
 
 
-def optimize_bot(game, bot1, bot2):
+def optimize_bot(game, bot1, bot2) -> None:
     """
     Punish or Reward the bot with respect to the agent that wins the game.
     """
@@ -20,7 +20,7 @@ def optimize_bot(game, bot1, bot2):
         bot1.on_reward(-1)
 
 
-def train(epochs, bot1, bot2):
+def train(epochs, bot1, bot2) -> tuple:
     """
     The train function is a training simulator for two bots.
     """
@@ -52,7 +52,7 @@ def train(epochs, bot1, bot2):
     return bots[0]['wins'], bots[1]['wins']
 
 
-def main():
+def main() -> None:
     bot1 = Agent(sym='X')
     bot2 = Agent(sym='O')
     epochs = int(input('Enter the number of epochs for training: '))

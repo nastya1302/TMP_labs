@@ -1,7 +1,7 @@
 import os
 
 
-def log(*args):
+def log(*args) -> None:
     """
     This log function is used to output messages 
     to the console, but only if the ENVIRONMENT variable is set to dev.
