@@ -182,3 +182,4 @@ class Agent(object):
         log('best_value_indices', best_value_indices)
         select_index = np.random.choice(len(best_value_indices))
         return ast.literal_eval(best_value_indices[select_index])
+ 

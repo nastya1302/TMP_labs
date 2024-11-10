@@ -419,3 +419,4 @@ class Board(object):
         if item_x > max_limit - 1 or item_y > max_limit:
             return
         self.player_move(self.bot_sym.get('mark'), item_x, item_y)
+ 

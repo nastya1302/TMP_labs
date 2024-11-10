@@ -19,6 +19,7 @@ def optimize_bot(game, bot1, bot2):
         bot2.on_reward(-1)
         bot1.on_reward(-1)
 
+
 def train(epochs, bot1, bot2):
     bots = [{
         'mdl': bot1,
@@ -68,3 +69,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+ 
