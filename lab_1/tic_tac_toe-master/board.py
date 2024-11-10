@@ -101,7 +101,7 @@ class Board(object):
 
     def draw_board(self):
         """
-        Prints a human friendly representation of the tic-tac-toe board
+        Prints a human friendly representation of the tic-tac-toe board.
         """
         elements_in_board = self.board.size
         # Calculate the elements in the board
@@ -339,7 +339,7 @@ class Board(object):
 
     def is_stale(self):
         """
-        Checks if there is no vacant space on the board
+        Checks if there is no vacant space on the board.
         """
         x, y = np.where(self.board == 0)
         if len(x) == 0 and len(y) == 0:

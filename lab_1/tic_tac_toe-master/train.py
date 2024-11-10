@@ -5,7 +5,7 @@ from agent import Agent
 
 def optimize_bot(game, bot1, bot2):
     """
-    Punish or Reward the bot with respect to the agent that wins the game
+    Punish or Reward the bot with respect to the agent that wins the game.
     """
     if game.winner == bot1.sym:
         bot1.on_reward(1)
@@ -21,6 +21,9 @@ def optimize_bot(game, bot1, bot2):
 
 
 def train(epochs, bot1, bot2):
+    """
+    The train function is a training simulator for two bots.
+    """
     bots = [{
         'mdl': bot1,
         'name': 'bot1',
