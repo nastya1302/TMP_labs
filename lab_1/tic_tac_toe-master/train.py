@@ -9,9 +9,7 @@ def optimize_bot(game, bot1, bot2) -> None:
     """
     if game.winner == bot1.sym:
         bot1.on_reward(1)
-        # reward
         bot2.on_reward(-1)
-        # punishment
     elif game.winner == bot2.sym:
         bot1.on_reward(-1)
         bot2.on_reward(1)
@@ -34,7 +32,6 @@ def train(epochs, bot1, bot2) -> tuple:
         log('epoch: {}'.format(i + 1))
         game = Board()
         while not game.stale and not game.winner:
-            # Exit if the board is full
             for bot in bots:
                 winner = game.player_move(
                     bot['mdl'].sym, *bot['mdl'].select_move(game.board)

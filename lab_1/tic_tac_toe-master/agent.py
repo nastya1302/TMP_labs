@@ -32,10 +32,7 @@ class Agent(object):
         """
         self.sym = sym
         self.states = {}
-        # The list of states, a linear representation of the 3x3 tic tac toe board
         self.state_order = []
-        # The order in which the agent progressed through states to be able to
-        # assign discounted rewards to older states.
         self.learning_rate = learning_rate
         self.decay = decay
         self.discount_factor = discount_factor
@@ -88,29 +85,20 @@ class Agent(object):
         if len(self.state_order) == 0:
             return None
         new_state_key, new_action = self.state_order.pop()
-        # get the latest state and the action performed that led to the reward
 
         self.states[new_state_key] = np.zeros((3, 3))
-        # initialize the value with a zero matrix
 
         self.states[new_state_key].itemset(new_action, reward)
-        # Assign the reward to this state
 
         while self.state_order:
-            # while there is a stack of states (that were caused by actions performed)
-
             state_key, action = self.state_order.pop()
-            # get the state and action performed on it
 
             reward *= self.discount_factor
-            # Reduce the original reward (self.discount_factor is a number < 1)
 
-            # Implementation of the value function
             if state_key in self.states:
                 reward += self.learn_by_temporal_difference(
                     reward, new_state_key, state_key
                 ).item(new_action)
-                # If this state was encountered due to a different experiment, increase its previous value
                 log("update learning", state_key, action, reward)
                 log(self.states[state_key])
                 self.states[state_key].itemset(action, reward)
@@ -120,7 +108,6 @@ class Agent(object):
                     reward, new_state_key, state_key
                 ).item(new_action)
                 self.states[state_key].itemset(action, reward)
-                # If this state was not encountered before, assign it the discounted reward as its value
             new_state_key = state_key
             new_action = action
 
@@ -182,7 +169,6 @@ class Agent(object):
         Find the best action for the given state
         """
         state_values = self.states[state_key]
-        # For the current state get the matrix of accumulated rewards
         log('State rewards', state_values)
         free_cells = np.argwhere(board == 0)
         best_values = {}

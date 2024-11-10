@@ -35,26 +35,17 @@ class Board(object):
         self.board = None
         self.reset_board(n)
         self.stale = False
-        # Initalize the board
 
         self.sym_o = {'mark': 'O', 'value': 1}
-        # Setup the 'O' symbol
-
         self.sym_x = {'mark': 'X', 'value': 2}
-        # Setup the 'X' symbol
-
         self.sym_empty = {'mark': ' ', 'value': 0}
-        # Setup the default ' ' Symbol
 
         self.player_sym, self.bot_sym = (
             (self.sym_x, self.sym_o)
             if player_sym.lower() == 'x'
             else (self.sym_o, self.sym_x)
         )
-        # Ensure different symbols are assigned to the bot and the player.
-
         self.winner = None
-        # Initialize the winner as None
 
     def reset_board(self, n=3) -> None:
         """
@@ -83,13 +74,10 @@ class Board(object):
         return: str
         """
         if item == self.sym_x.get('value'):
-            # If item = 2 (value of symbol x, return mark of symbol x viz: 'X')
             return self.sym_x.get('mark')
         elif item == self.sym_o.get('value'):
-            # If item = 1 (value of symbol o, return mark of symbol o viz: 'O')
             return self.sym_o.get('mark')
         else:
-            # Otherwise the cell must be empty, as only 1, 2 have 'O','X' mapped onto them.
             return self.sym_empty.get('mark')
 
     def draw_board(self) -> None:
@@ -97,14 +85,11 @@ class Board(object):
         Prints a human friendly representation of the tic-tac-toe board.
         """
         elements_in_board = self.board.size
-        # Calculate the elements in the board
 
         items = [
             self.draw_char_for_item(self.board.item(item_idx))
             for item_idx in range(elements_in_board)
         ]
-        # For each integer cell/element in the matrix, find the character mapped to it
-        # and store in a list.
         board = """
              {} | {} | {}
             -----------
@@ -114,9 +99,6 @@ class Board(object):
         """.format(
             *items
         )
-        # The *items expand to N arguments where N is the number of elements in `items`,
-        # which is equal to the number of elements in the matrix, hence the string equivalent
-        # of the board
         print(board)
 
     def have_same_val(self, axis, item, item_x, item_y) -> bool:
@@ -139,50 +121,23 @@ class Board(object):
         - item int: The latest integer inserted into the matrix at row-index = item_x, and column-index = item_y.
         """
         max_limit, _ = self.board.shape
-        # Get the number of rows in the board.
-
         result = True
-        # Optimistic approach, assume the result to be true,
-        # unless proven wrong in the further steps.
-
         row_idx = col_idx = 0
-        # set row_idx and col_idx iteration variables as 0
-        # they don't get used much, they are present for code readability.
 
         main_idx, fixed_idx, ignore_idx = (
             (col_idx, item_x, item_y) if axis == 0 else (row_idx, item_y, item_x)
         )
-        # main_idx: Update this index each iteration of the loop.
-        # fixed_idx: Don't modify this index ever.
-        # ignore_idx: this is the index of the inserted element
-        #              which doesn't need to be evaluated, so ignore.
-        # The if-else ensures weather to increment the row index
-        # or the column index according to the value of the axis.
 
         while main_idx < max_limit:
-            # If the main_idx which starts at 0 is less than number of rows/cols in matrix.
             if main_idx != ignore_idx:
-                # And main_idx is not equal to the index of the latest item inserted (ignore_idx)
-                # because for a fixed_index if we compare main_idx and ignore_idx it would give us the
-                # latest element added, which will be equal to itself.
-                # Learning algorithms are costly, ain't nobady got time fo that!
 
                 board_item = (
                     self.board[fixed_idx][main_idx]
                     if axis == 0
                     else self.board[main_idx][fixed_idx]
                 )
-                # find the item(board_item) in the matrix
-                # corresponding to main_idx and the fixed_index.
-                # It should be an element in the same row or column depending on the axis.
 
                 if board_item != item or board_item == 0:
-                    # If the board_item found is not equal to the latest item added
-                    # or if the board item is 0, which is still not marked by bot or player,
-                    # result is false as the function didn't find all
-                    # values to be same across the row, or column.
-                    # and exit the loop because a single-mismatch is sufficient
-                    # to confirm that all elements are not same.
                     result = False
                     break
             main_idx += 1
@@ -197,26 +152,12 @@ class Board(object):
         - item int: The latest integer inserted into the matrix at row-index = item_x, and column-index = item_y.
         """
         i = j = 0
-        # set i, j to 0
-
         result = True
-        # Optimistic approach, assume the result to be true,
-        # unless proven wrong in the further steps.
-
         max_limit, _ = self.board.shape
-        # Get the number of rows in the board.
 
         while i < max_limit:
-            # The row index i is sufficient as i and j are incremented
-            # by same factor resulting in same values (Either would do)
             if i != item_x:
-                # Avoid checking for the latest item added as that's what we are comparing with
                 if self.board[i][j] != item or self.board[i][j] == 0:
-                    # If the board_item found is not equal to the latest item added
-                    # result is false as the function didn't find all
-                    # values to be same across the row, or column.
-                    # and exit the loop because a single-mismatch is sufficient
-                    # to confirm that all elements are not same.
                     result = False
                     break
             i += 1
@@ -236,16 +177,8 @@ class Board(object):
         i = 0
         j = max_limit - 1
         while i < max_limit:
-            # The row index i is sufficient as i and j are incremented
-            # by same factor resulting in same values (Either would do)
             if i != item_x:
-                # Avoid checking for the latest item added as that's what we are comparing with
                 if self.board[i][j] != item or self.board[i][j] == 0:
-                    # If the board_item found is not equal to the latest item added
-                    # result is false as the function didn't find all
-                    # values to be same across the row, or column.
-                    # and exit the loop because a single-mismatch is sufficient
-                    # to confirm that all elements are not same.
                     result = False
                     break
             i += 1
@@ -295,13 +228,10 @@ class Board(object):
             ) or self.right_diagonal_has_same_values(item, item_x, item_y)
 
         if item_x == item_y:
-            # elements on the left diagonal have same row and column value.
             return self.left_diagonal_has_same_values(item, item_x, item_y)
 
         if item_x + item_y == max_limit - 1:
-            # elements on the right diagonal have sum of the row and column value as the same number.
             return self.right_diagonal_has_same_values(item, item_x, item_y)
-        # Else, it is not either of the diagonals
         return False
 
     def is_game_over(self, player, item, item_x, item_y) -> bool:
@@ -360,27 +290,20 @@ class Board(object):
         symbol = None
 
         if input_symbol == self.sym_o.get('mark'):
-            # If 'O' was inserted
             symbol = self.sym_o
 
         elif input_symbol == self.sym_x.get('mark'):
-            # If 'X' was inserted
             symbol = self.sym_x
 
         else:
-            # invalid symbol
             return
         if self.board[item_x][item_y] == 0:
             self.board[item_x][item_y] = symbol.get('value')
-            # insert the integer corresponding to the symbol in to the matrix.
-
             self.draw_board()
-            # Show the board in a human friendly format for evaluation.
 
             if self.is_winning_move(
                 symbol.get('mark'), symbol.get('value'), item_x, item_y
             ):
-                # If this move was a winning move, declare the symbol as the winner.
                 print('Winner is: {}'.format(self.winner))
                 return self.winner
             elif self.is_stale():
@@ -400,8 +323,6 @@ class Board(object):
         """
         max_limit, _ = self.board.shape
         if item_x > max_limit - 1 or item_y > max_limit:
-            # If the row, column values dont' exist in the board matrix.
-            # Exit without inserting it into the board.
             return
         self.player_move(self.player_sym.get('mark'), item_x, item_y)
 
