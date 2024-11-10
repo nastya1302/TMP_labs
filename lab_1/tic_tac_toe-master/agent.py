@@ -63,7 +63,7 @@ class Agent(object):
         https://en.wikipedia.org/wiki/Temporal_difference_learning
         https://detailed.af/reinforcement/
         """
-        old_state = self.states.get(state_key, np.zeros((3,3)))
+        old_state = self.states.get(state_key, np.zeros((3, 3)))
         self.exploration_rate = max(self.exploration_rate - self.decay, 0.3)
         return self.learning_rate * ((reward * self.states[new_state_key]) - old_state)
 
@@ -83,7 +83,7 @@ class Agent(object):
         new_state_key, new_action = self.state_order.pop()
         # get the latest state and the action performed that led to the reward
 
-        self.states[new_state_key] = np.zeros((3,3))
+        self.states[new_state_key] = np.zeros((3, 3))
         # initialize the value with a zero matrix
 
         self.states[new_state_key].itemset(new_action, reward)
