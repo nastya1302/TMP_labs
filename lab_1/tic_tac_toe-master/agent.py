@@ -6,7 +6,14 @@ from utils import log
 
 
 class Agent(object):
-    def __init__(self, sym, exploration_rate=0.90, decay=0.01, learning_rate=0.5, discount_factor=0.01) -> None:
+    def __init__(
+        self,
+        sym,
+        exploration_rate=0.90,
+        decay=0.01,
+        learning_rate=0.5,
+        discount_factor=0.01,
+    ) -> None:
         """
         An agent is a problem solver.
         It should perform actions like:
@@ -100,14 +107,18 @@ class Agent(object):
 
             # Implementation of the value function
             if state_key in self.states:
-                reward += self.learn_by_temporal_difference(reward, new_state_key, state_key).item(new_action)
+                reward += self.learn_by_temporal_difference(
+                    reward, new_state_key, state_key
+                ).item(new_action)
                 # If this state was encountered due to a different experiment, increase its previous value
-                log('update learning', state_key, action, reward)
+                log("update learning", state_key, action, reward)
                 log(self.states[state_key])
                 self.states[state_key].itemset(action, reward)
             else:
-                self.states[state_key] = np.zeros((3,3))
-                reward = self.learn_by_temporal_difference(reward, new_state_key, state_key).item(new_action)
+                self.states[state_key] = np.zeros((3, 3))
+                reward = self.learn_by_temporal_difference(
+                    reward, new_state_key, state_key
+                ).item(new_action)
                 self.states[state_key].itemset(action, reward)
                 # If this state was not encountered before, assign it the discounted reward as its value
             new_state_key = state_key
@@ -124,22 +135,28 @@ class Agent(object):
         missing_experience_message = 'No experience for this state: explore'
         experience_present_message = 'Using previous experience'
         state_key = Agent.serialize_board(board)
-        log('-' * 100)
-        log('state key', state_key)
-        p =  np.random.random()
+        log("-" * 100)
+        log("state key", state_key)
+        p = np.random.random()
         exploration = p < self.exploration_rate
-        log(p, '<', self.exploration_rate)
-        message = explore_message \
-            if exploration \
-            else missing_experience_message \
-                if state_key not in self.states \
+        log(p, "<", self.exploration_rate)
+        message = (
+            explore_message
+            if exploration
+            else (
+                missing_experience_message
+                if state_key not in self.states
                 else experience_present_message
+            )
+        )
 
         log(message)
-        action = self.explore_board(board) \
-                    if exploration or state_key not in self.states \
-                    else self.exploit_board(state_key, board)
-        log('Choose cell', action)
+        action = (
+            self.explore_board(board)
+            if exploration or state_key not in self.states
+            else self.exploit_board(state_key, board)
+        )
+        log("Choose cell", action)
         self.set_state(board, action)
         return action
 
@@ -173,10 +190,11 @@ class Agent(object):
             if idx in free_cells:
                 best_values[str(idx)] = value
 
-        best_value_indices = [key
+        best_value_indices = [
+            key
             for m in [max(best_values.values())]
-                for key, val in best_values.items()
-                    if val == m
+            for key, val in best_values.items()
+            if val == m
         ]
 
         log('best_value_indices', best_value_indices)

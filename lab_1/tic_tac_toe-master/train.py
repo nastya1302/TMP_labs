@@ -24,15 +24,10 @@ def train(epochs, bot1, bot2) -> tuple:
     """
     The train function is a training simulator for two bots.
     """
-    bots = [{
-        'mdl': bot1,
-        'name': 'bot1',
-        'wins': 0
-    }, {
-        'mdl': bot2,
-        'name': 'bot2',
-        'wins': 0
-    }]
+    bots = [
+        {'mdl': bot1, 'name': 'bot1', 'wins': 0},
+        {'mdl': bot2, 'name': 'bot2', 'wins': 0},
+    ]
 
     for i in range(epochs):
         log('-' * 100)
@@ -41,7 +36,9 @@ def train(epochs, bot1, bot2) -> tuple:
         while not game.stale and not game.winner:
             # Exit if the board is full
             for bot in bots:
-                winner = game.player_move(bot['mdl'].sym, *bot['mdl'].select_move(game.board))
+                winner = game.player_move(
+                    bot['mdl'].sym, *bot['mdl'].select_move(game.board)
+                )
                 log('winner found:', winner)
                 if winner:
                     optimize_bot(game, bot1, bot2)

@@ -37,27 +37,20 @@ class Board(object):
         self.stale = False
         # Initalize the board
 
-        self.sym_o = {
-            'mark': 'O',
-            'value': 1
-        }
+        self.sym_o = {'mark': 'O', 'value': 1}
         # Setup the 'O' symbol
 
-        self.sym_x = {
-            'mark': 'X',
-            'value': 2
-        }
+        self.sym_x = {'mark': 'X', 'value': 2}
         # Setup the 'X' symbol
 
-        self.sym_empty = {
-            'mark': ' ',
-            'value': 0
-        }
+        self.sym_empty = {'mark': ' ', 'value': 0}
         # Setup the default ' ' Symbol
 
-        self.player_sym, self.bot_sym = (self.sym_x, self.sym_o) \
-                                        if player_sym.lower() == 'x' \
-                                        else (self.sym_o, self.sym_x)
+        self.player_sym, self.bot_sym = (
+            (self.sym_x, self.sym_o)
+            if player_sym.lower() == 'x'
+            else (self.sym_o, self.sym_x)
+        )
         # Ensure different symbols are assigned to the bot and the player.
 
         self.winner = None
@@ -118,7 +111,9 @@ class Board(object):
              {} | {} | {}
             -----------
              {} | {} | {}
-        """.format(*items)
+        """.format(
+            *items
+        )
         # The *items expand to N arguments where N is the number of elements in `items`,
         # which is equal to the number of elements in the matrix, hence the string equivalent
         # of the board
@@ -154,9 +149,9 @@ class Board(object):
         # set row_idx and col_idx iteration variables as 0
         # they don't get used much, they are present for code readability.
 
-        main_idx, fixed_idx, ignore_idx = (col_idx, item_x, item_y) \
-                                            if axis == 0 \
-                                            else (row_idx, item_y, item_x)
+        main_idx, fixed_idx, ignore_idx = (
+            (col_idx, item_x, item_y) if axis == 0 else (row_idx, item_y, item_x)
+        )
         # main_idx: Update this index each iteration of the loop.
         # fixed_idx: Don't modify this index ever.
         # ignore_idx: this is the index of the inserted element
@@ -172,9 +167,11 @@ class Board(object):
                 # latest element added, which will be equal to itself.
                 # Learning algorithms are costly, ain't nobady got time fo that!
 
-                board_item = self.board[fixed_idx][main_idx] \
-                    if axis == 0 \
+                board_item = (
+                    self.board[fixed_idx][main_idx]
+                    if axis == 0
                     else self.board[main_idx][fixed_idx]
+                )
                 # find the item(board_item) in the matrix
                 # corresponding to main_idx and the fixed_index.
                 # It should be an element in the same row or column depending on the axis.
@@ -293,8 +290,9 @@ class Board(object):
         """
         max_limit, _ = self.board.shape
         if item_x == item_y and item_x + item_y == max_limit - 1:
-            return self.left_diagonal_has_same_values(item, item_x, item_y) or \
-            self.right_diagonal_has_same_values(item, item_x, item_y)
+            return self.left_diagonal_has_same_values(
+                item, item_x, item_y
+            ) or self.right_diagonal_has_same_values(item, item_x, item_y)
 
         if item_x == item_y:
             # elements on the left diagonal have same row and column value.
@@ -317,9 +315,11 @@ class Board(object):
         - item_y int: The column of the matrix in which the item has been inserted.
         - item int: The latest integer inserted into the matrix at row-index = item_x, and column-index = item_y.
         """
-        return self.cols_have_same_values(item, item_x, item_y) or \
-                    self.rows_have_same_values(item, item_x, item_y) or \
-                    self.element_diagonal_has_same_value(item, item_x, item_y)
+        return (
+            self.cols_have_same_values(item, item_x, item_y)
+            or self.rows_have_same_values(item, item_x, item_y)
+            or self.element_diagonal_has_same_value(item, item_x, item_y)
+        )
 
     def is_winning_move(self, player, item, item_x, item_y) -> bool:
         """
@@ -346,7 +346,6 @@ class Board(object):
             self.stale = True
         log('is game stale? ', self.stale)
         return self.stale
-
 
     def player_move(self, input_symbol, item_x, item_y):
         """
@@ -378,7 +377,9 @@ class Board(object):
             self.draw_board()
             # Show the board in a human friendly format for evaluation.
 
-            if self.is_winning_move(symbol.get('mark'), symbol.get('value'), item_x, item_y):
+            if self.is_winning_move(
+                symbol.get('mark'), symbol.get('value'), item_x, item_y
+            ):
                 # If this move was a winning move, declare the symbol as the winner.
                 print('Winner is: {}'.format(self.winner))
                 return self.winner
