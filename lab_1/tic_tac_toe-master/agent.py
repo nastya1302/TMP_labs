@@ -8,11 +8,11 @@ from utils import log
 class Agent(object):
     def __init__(
         self,
-        sym,
-        exploration_rate=0.90,
-        decay=0.01,
-        learning_rate=0.5,
-        discount_factor=0.01,
+        sym: str,
+        exploration_rate: float = 0.9,
+        decay: float = 0.01,
+        learning_rate: float = 0.5,
+        discount_factor: float = 0.01,
     ) -> None:
         """
         An agent is a problem solver.
@@ -61,7 +61,7 @@ class Agent(object):
         """
         self.exploration_rate = 0
 
-    def learn_by_temporal_difference(self, reward, new_state_key, state_key):
+    def learn_by_temporal_difference(self, reward: float, new_state_key: str, state_key: str):
         """
         Implementation of the temporal difference formula.
         https://en.wikipedia.org/wiki/Temporal_difference_learning
@@ -71,14 +71,14 @@ class Agent(object):
         self.exploration_rate = max(self.exploration_rate - self.decay, 0.3)
         return self.learning_rate * ((reward * self.states[new_state_key]) - old_state)
 
-    def set_state(self, old_board, action) -> None:
+    def set_state(self, old_board, action: tuple) -> None:
         """
         Store the action performed for a given state
         """
         state_key = Agent.serialize_board(old_board)
         self.state_order.append((state_key, action))
 
-    def on_reward(self, reward) -> None:
+    def on_reward(self, reward: float) -> None:
         """
         Assign rewards to actions performed on intermediate states.
         """
@@ -147,7 +147,7 @@ class Agent(object):
         self.set_state(board, action)
         return action
 
-    def explore_board(self, board, depth=0) -> tuple:
+    def explore_board(self, board, depth: int = 0) -> tuple:
         """
         Find an empty cell from the board
         """
@@ -164,7 +164,7 @@ class Agent(object):
         depth += 1
         return self.explore_board(board, depth=depth)
 
-    def exploit_board(self, state_key, board):
+    def exploit_board(self, state_key: str, board):
         """
         Find the best action for the given state
         """

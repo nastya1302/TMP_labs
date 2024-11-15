@@ -25,7 +25,7 @@ class Board(object):
             - A win is defined by any row, column or diagonal being filled with the same symbol, with the symbol as the winner.
         - If there is a winner, prints a message for the same.
     """
-    def __init__(self, n=3, player_sym='x') -> None:
+    def __init__(self, n: int = 3, player_sym: str = 'x') -> None:
         """
         Constructor of the Board class, creates board objects.
 
@@ -47,7 +47,7 @@ class Board(object):
         )
         self.winner = None
 
-    def reset_board(self, n=3) -> None:
+    def reset_board(self, n: int = 3) -> None:
         """
         params:
 
@@ -57,7 +57,7 @@ class Board(object):
         self.board = np.zeros((n, n)).astype(int)
         self.winner = None
 
-    def draw_char_for_item(self, item):
+    def draw_char_for_item(self, item: int):
         """
         Returns the string mapping of the integers in the matrix
         which can be understood by, but is not equal to:
@@ -101,7 +101,7 @@ class Board(object):
         )
         print(board)
 
-    def have_same_val(self, axis, item, item_x, item_y) -> bool:
+    def have_same_val(self, axis: int, item: int, item_x: int, item_y: int) -> bool:
         """
         Oh boy! without the documentation this would be just 12-14 lines of code.
 
@@ -143,7 +143,7 @@ class Board(object):
             main_idx += 1
         return result
 
-    def left_diagonal_has_same_values(self, item, item_x, item_y) -> bool:
+    def left_diagonal_has_same_values(self, item: int, item_x: int, item_y: int) -> bool:
         """
         params
 
@@ -164,7 +164,7 @@ class Board(object):
             j += 1
         return result
 
-    def right_diagonal_has_same_values(self, item, item_x, item_y) -> bool:
+    def right_diagonal_has_same_values(self, item: int, item_x: int, item_y: int) -> bool:
         """
         params
 
@@ -185,7 +185,7 @@ class Board(object):
             j -= 1
         return result
 
-    def cols_have_same_values(self, item, item_x, item_y) -> bool:
+    def cols_have_same_values(self, item: int, item_x: int, item_y: int) -> bool:
         """
         Check if any of the columns have same values
 
@@ -198,7 +198,7 @@ class Board(object):
         axis = 1
         return self.have_same_val(axis, item, item_x, item_y)
 
-    def rows_have_same_values(self, item, item_x, item_y) -> bool:
+    def rows_have_same_values(self, item: int, item_x: int, item_y: int) -> bool:
         """
         Check if any of the rows have same values
 
@@ -211,7 +211,7 @@ class Board(object):
         axis = 0
         return self.have_same_val(axis, item, item_x, item_y)
 
-    def element_diagonal_has_same_value(self, item, item_x, item_y) -> bool:
+    def element_diagonal_has_same_value(self, item: int, item_x: int, item_y: int) -> bool:
         """
         Check if any of the diagonals have same values
 
@@ -234,7 +234,7 @@ class Board(object):
             return self.right_diagonal_has_same_values(item, item_x, item_y)
         return False
 
-    def is_game_over(self, player, item, item_x, item_y) -> bool:
+    def is_game_over(self, item: int, item_x: int, item_y: int) -> bool:
         """
         Check if the game is over, which is defined by a row, column or diagonal having
         the same values as the latest inserted integer `item`.
@@ -251,7 +251,7 @@ class Board(object):
             or self.element_diagonal_has_same_value(item, item_x, item_y)
         )
 
-    def is_winning_move(self, player, item, item_x, item_y) -> bool:
+    def is_winning_move(self, player: str, item: int, item_x: int, item_y: int) -> bool:
         """
         Check if the last move was a winning move, which is defined by a row, column or diagonal having
         the same values as the latest inserted integer `item`.
@@ -262,7 +262,7 @@ class Board(object):
         - item_y int: The column of the matrix in which the item has been inserted.
         - item int: The latest integer inserted into the matrix at row-index = item_x, and column-index = item_y.
         """
-        if self.is_game_over(player, item, item_x, item_y):
+        if self.is_game_over(item, item_x, item_y):
             self.winner = player
             return True
         return False
@@ -277,7 +277,7 @@ class Board(object):
         log('is game stale? ', self.stale)
         return self.stale
 
-    def player_move(self, input_symbol, item_x, item_y):
+    def player_move(self, input_symbol: str, item_x: int, item_y: int):
         """
         The method which facilitates insertion of values into the board matrix.
 
@@ -310,7 +310,7 @@ class Board(object):
                 print('Draw')
                 return 'draw'
 
-    def play(self, item_x, item_y) -> None:
+    def play(self, item_x: int, item_y: int) -> None:
         """
         The method exposed to a human user
         facilitates insertion of values into the board matrix.
@@ -326,7 +326,7 @@ class Board(object):
             return
         self.player_move(self.player_sym.get('mark'), item_x, item_y)
 
-    def bot_play(self, item_x, item_y) -> None:
+    def bot_play(self, item_x: int, item_y: int) -> None:
         """
         The method exposed to a bot
         facilitates insertion of values into the board matrix.
