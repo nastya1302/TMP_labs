@@ -87,8 +87,8 @@ def get_invalid_data(patterns: dict[str, str], list_data: list[str]) -> list[int
         list[int]: indexes of invalid rows.
     """
     list_invalid: list[int] = []
-    for index, row in enumerate(list_data):
-        if validation_check(patterns, row):
+    for index, row in enumerate(list_data[1:]):
+        if not validation_check(patterns, row):
             list_invalid.append(index)
     return list_invalid
  
