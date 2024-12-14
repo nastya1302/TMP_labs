@@ -5,5 +5,5 @@
     "task2_key": "lab_4/lab1/task2_key.json",
     "task1_encrypted_text": "lab_4/lab1/task1_encrypted_text.txt",
     "task2_encrypted_text": "lab_4/lab1/task2_encrypted_text.txt",
-    "task2_text_analysis": "lab_4/lab1/task2_text_analysis.json"
+    "task2_text_analysis": "lab_4/lab1/task2_frequency.json"
 }
