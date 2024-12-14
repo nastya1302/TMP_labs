@@ -1,9 +1,9 @@
 {
-    "task1_sourse_text": "lab_1/task1_sourse_text.txt",
-    "task2_sourse_text": "lab_1/task2_sourse_text.txt",
-    "task1_key": "lab_1/task1_key.txt",
-    "task2_key": "lab_1/task2_key.json",
-    "task1_encrypted_text": "lab_1/task1_encrypted_text.txt",
-    "task2_encrypted_text": "lab_1/task2_encrypted_text.txt",
-    "task2_text_analysis": "lab_1/task2_text_analysis.json"
+    "task1_sourse_text": "lab_4/lab1/task1_sourse_text.txt",
+    "task2_sourse_text": "lab_4/lab1/task2_sourse_text.txt",
+    "task1_key": "lab_4/lab1/task1_key.txt",
+    "task2_key": "lab_4/lab1/task2_key.json",
+    "task1_encrypted_text": "lab_4/lab1/task1_encrypted_text.txt",
+    "task2_encrypted_text": "lab_4/lab1/task2_encrypted_text.txt",
+    "task2_text_analysis": "lab_4/lab1/task2_text_analysis.json"
 }

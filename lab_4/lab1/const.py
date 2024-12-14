@@ -1,4 +1,4 @@
-PATH = "lab_1/paths.json"
+PATH = "lab_4/lab1/paths.json"
 ALPHABET = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-LOG = "lab1/app.log"
+LOG = "lab_4/lab1/app.log"
  

@@ -1,9 +1,12 @@
 import logging
 
-from working_functions import *
+from working_functions import read_file, write_file, read_json, write_json
 from const import *
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", filename=LOG, filemode="a") 
+logging.basicConfig(level=logging.INFO, 
+                    format="%(asctime)s %(levelname)s %(message)s", 
+                    filename=LOG, 
+                    filemode="w") 
 
 def create_dict(sourse_alphabet: str) -> dict:
     """

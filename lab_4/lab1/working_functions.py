@@ -3,7 +3,10 @@ import logging
 
 from const import LOG
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", filename=LOG, filemode="a") 
+logging.basicConfig(level=logging.INFO, 
+                    format="%(asctime)s %(levelname)s %(message)s", 
+                    filename=LOG, 
+                    filemode="w")  
 
 def read_file(path: str) -> str:
     """
