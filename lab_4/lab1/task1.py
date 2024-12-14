@@ -1,6 +1,9 @@
+import logging
+
 from working_functions import *
 from const import *
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", filename=LOG, filemode="a") 
 
 def create_dict(sourse_alphabet: str) -> dict:
     """
@@ -11,6 +14,7 @@ def create_dict(sourse_alphabet: str) -> dict:
     for letter in sourse_alphabet:
         dict_alphabet[letter] = i
         i += 1
+    logging.info("Alphabet dictionary created successfully.")
     return dict_alphabet
 
 
@@ -22,6 +26,7 @@ def create_vigenere_ciphe(sourse_alphabet: str) -> dict:
     list_line: dict = {}
     for i in range(32):
         list_line[i] = list_letter[i : i + 32 : 1] + list_letter[0:i]
+    logging.info("Vigenere cipher table created successfully.")
     return list_line
 
 
@@ -29,16 +34,24 @@ def encryption(path_sourse_text: str, path_key: str, path_encrypted_text: str) -
     """
     A function for creating encrypted text.
     """
-    text: str = read_file(path_sourse_text)
-    key: str = read_file(path_key)
-    text: str = "".join(text.split())
-    key: str = (key * (len(text) // len(key) + 1))[: len(text)]
-    dict_alphabet: dict = create_dict(ALPHABET)
-    table: dict = create_vigenere_ciphe(ALPHABET)
-    new_text: str = ""
-    for k, t in zip(key, text):
-        new_text += table[dict_alphabet[k]][dict_alphabet[t]]
-    write_file(path_encrypted_text, new_text)
+    logging.info(f"Starting encryption. Source text: {path_sourse_text}, key: {path_key}, output: {path_encrypted_text}")
+    try:
+        text: str = read_file(path_sourse_text)
+        key: str = read_file(path_key)
+        if text is None or key is None:
+            logging.error("Error reading source text or key file.")
+            return
+        text: str = "".join(text.split())
+        key: str = (key * (len(text) // len(key) + 1))[: len(text)]
+        dict_alphabet: dict = create_dict(ALPHABET)
+        table: dict = create_vigenere_ciphe(ALPHABET)
+        new_text: str = ""
+        for k, t in zip(key, text):
+            new_text += table[dict_alphabet[k]][dict_alphabet[t]]
+        write_file(path_encrypted_text, new_text)
+        logging.info(f"Encryption completed successfully. Encrypted text saved to: {path_encrypted_text}")
+    except Exception as e:
+        logging.exception(f"An error occurred during encryption: {e}")
 
 
 def main() -> None:
