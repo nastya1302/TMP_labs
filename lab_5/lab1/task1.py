@@ -1,7 +1,7 @@
 import logging
 
-from working_functions import read_file, write_file, read_json, write_json
-from const import *
+from lab1.working_functions import read_file, write_file, read_json, write_json
+from lab1.const import *
 
 logging.basicConfig(level=logging.INFO, 
                     format="%(asctime)s %(levelname)s %(message)s", 
@@ -27,8 +27,9 @@ def create_vigenere_ciphe(sourse_alphabet: str) -> dict:
     """
     list_letter: list = list(sourse_alphabet)
     list_line: dict = {}
-    for i in range(32):
-        list_line[i] = list_letter[i : i + 32 : 1] + list_letter[0:i]
+    count: int = len(list_letter)
+    for i in range(count):
+        list_line[i] = list_letter[i : i + count : 1] + list_letter[0:i]
     logging.info("Vigenere cipher table created successfully.")
     return list_line
 

@@ -1,5 +1,5 @@
-from working_functions import *
-from const import PATH, LOG
+from lab1.working_functions import *
+from lab1.const import PATH, LOG
 
 logging.basicConfig(level=logging.INFO, 
                     format="%(asctime)s %(levelname)s %(message)s", 
@@ -22,7 +22,7 @@ def frequency_analysis_of_text(path: str, text: str) -> None:
     logging.info("The frequency analysis of the specified ciphertext has been completed.")    
 
 
-def decryption(path_sourse_text: str, path_key: str, path_encrypted_text: str, path_text_analysis: str) -> None:
+def decryption(path_sourse_text: str, path_key: str, path_encrypted_text: str) -> None:
     """
     A function for creating decrypted text.
     """
@@ -30,7 +30,6 @@ def decryption(path_sourse_text: str, path_key: str, path_encrypted_text: str, p
     try:   
         text: str = read_file(path_encrypted_text)
         key: dict = read_json(path_key)
-        frequency_analysis_of_text(path_text_analysis, text)
         new_text: str = ""
         for letter in text:
             if letter in key:
@@ -44,8 +43,10 @@ def decryption(path_sourse_text: str, path_key: str, path_encrypted_text: str, p
 def main() -> None:
     paths: dict = read_json(PATH)
     decryption(
-        paths["task2_sourse_text"], paths["task2_key"], paths["task2_encrypted_text"], paths["task2_text_analysis"]
+        paths["task2_sourse_text"], paths["task2_key"], paths["task2_encrypted_text"]
     )
+    text: str = read_file(paths["task2_encrypted_text"])
+    frequency_analysis_of_text(paths["task2_text_analysis"], text)
 
 
 if __name__ == "__main__":

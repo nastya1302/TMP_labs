@@ -1,7 +1,7 @@
 import json
 import logging
 
-from const import LOG
+from lab1.const import LOG
 
 logging.basicConfig(level=logging.INFO, 
                     format="%(asctime)s %(levelname)s %(message)s", 
@@ -57,8 +57,8 @@ def write_json(path: str, dictionary: dict) -> None:
     """
     logging.info(f"Writing to .json file: {path}")
     try:
-        with open(path, 'w') as f:
-            json.dump(dictionary, f)
+        with open(path, 'w', encoding="UTF-8") as f:
+            json.dump(dictionary, f, ensure_ascii=False,)
         logging.info(f"A .json file '{path}' written successfully.")
     except Exception as e:
         logging.exception(f"An error occurred while writing to '{path}': {e}")
